@@ -1,0 +1,149 @@
+<!-- Learned from Rodrigo Branas (https://www.youtube.com/playlist?list=PLQCmSnNFVYnTD5p2fR4EXmtlR6jQJMbPb) -->
+
+<!DOCTYPE html>
+<html ng-app="contactList">
+    <head>
+        <meta charset="utf-8">
+        <title>Contact List</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <style>
+            .jumbotron { width: 500px; margin: 20px auto; padding: 23px 10px 10px 10px  ; text-align: center;}
+            .table { margin-top: 20px; }
+            td { text-align: left; }
+            .form-control { margin-bottom: 5px; }
+            .selected { background-color: #ffff99 !important; }
+            .alert { margin-top: 10px; text-align: left; }
+            .footer { text-align: center;}
+        </style>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.5.8/angular-messages.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_pt-br.min.js"></script>
+
+        <script type="text/javascript">
+            var myModule = angular.module("contactList", ['ngMessages']);
+
+            myModule.controller('IndexController', function($scope, $http, $filter) {
+                $scope.appName = "Debtor Contacts List";
+
+                var uppercaseFilter = $filter("uppercase");
+
+                $scope.contactTypes = [];
+                $scope.contacts = [];
+
+                $scope.contactTypes.forEach(function(type) { type.category = uppercaseFilter(type.category); });
+
+                var loadContactTypes = function() {
+                    $http.get("http://localhost:3412/types").success(function(data, status) {
+                            data.forEach(function(type) {
+                                type.category = uppercaseFilter(type.category);
+                            });
+                            $scope.contactTypes = data;
+                        }).error(function(data, status) {
+                            $scope.message = "Occurred an error during the load the types."
+                        });
+                };
+                var loadContacts = function() {
+                    $http.get("http://localhost:3412/contacts").success(function(data, status) {
+                            $scope.contacts = data;
+                        }).error(function(data, status) {
+                            $scope.message = "Occurred an error during the load the contacts."
+                        });
+                };
+
+                $scope.addContact = function(contact) {
+                    //$scope.contacts.push(angular.copy(contact));
+                    $http.post("http://localhost:3412/contacts", contact).success(function(data) {
+                            $scope.message = "Debtor registered."
+                            delete $scope.contact;
+                            $scope.contactForm.$setPristine();
+                            loadContacts();
+                        }).error(function(data, status) {
+                            $scope.message = "Occurred an error."
+                        });
+                };
+                $scope.remContacts = function(contacts) {
+                    $scope.contacts = contacts.filter(function(contact){
+                        if(!contact.selected) return contact;
+                    });
+                };
+                $scope.isSelected = function(contacts) {
+                    return contacts.some(function(contact) {
+                        return contact.selected;
+                    });
+                };
+
+                loadContactTypes();
+                loadContacts();
+            });
+        </script>
+    </head>
+    <body ng-controller="IndexController">
+        <div class="jumbotron">
+            <h3>{{appName}}</h3>
+
+            <div class="alert alert-info alert-dismissible" role="alert" ng-show="message">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{message}}
+            </div>
+
+            <table class="table table-striped">
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Amount owed</th>
+                </tr>
+                <tr ng-if="contacts.length == 0">
+                    <td colspan="3">The list is empty (you are alone :'[)</td>
+                </tr>
+                <tr ng-repeat="contact in contacts" ng-class="{selected: contact.selected}">
+                    <td style="text-align:center;"><input type="checkbox" ng-model="contact.selected" /></td>
+                    <td>{{contact.name}}</td>
+                    <td>{{contact.type.description}}</td>
+                    <td>{{contact.value}}</td>
+                    <td>{{contact.amount | currency}}</td>
+                </tr>
+            </table>
+
+            <form name="contactForm" novalidate>
+                <input type="text" class="form-control" name="name" ng-model="contact.name" placeholder="Name" ng-required="true" ng-minlength="5" />
+                <input type="text" class="form-control" name="value" ng-model="contact.value" placeholder="Value" ng-required="true" />
+                <select class="form-control" name="type" ng-model="contact.type" ng-required="true" ng-options="type.description group by type.category for type in contactTypes">
+                    <option value="">Select a type</option>
+                </select>
+                <input type="text" class="form-control" name="amount" ng-model="contact.amount" placeholder="Amount owed" ng-required="true" ng-pattern="/^\d+[,]?\d{0,2}$/" />
+
+                <button class="btn btn-primary btn-block" ng-click="addContact(contact)" ng-disabled="contactForm.$invalid">Add Contact</button>
+                <button class="btn btn-danger btn-block" ng-click="remContacts(contacts)" ng-show="isSelected(contacts)">Remove Contacts</button>
+            </form>
+
+            <div class="alert alert-danger" ng-show="contactForm.$invalid">
+                <div ng-messages="contactForm.name.$error">
+                    <span ng-message="required">Name is required.</span>
+                    <span ng-message="minlength">Name is too short.</span>
+                </div>
+
+                <div ng-messages="contactForm.value.$error">
+                    <span ng-message="required">The contact value is required.</span>
+                </div>
+
+                <div ng-messages="contactForm.type.$error">
+                    <span ng-message="required">The type is required.</span>
+                </div>
+
+                <div ng-messages="contactForm.amount.$error">
+                    <span ng-message="required">Amount is required.</span>
+                    <span ng-message="pattern">Invalid amount.</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            Created by Wesley Egberto
+        </div>
+    </body>
+</html>
