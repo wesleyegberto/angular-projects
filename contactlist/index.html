@@ -23,63 +23,12 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.5.8/angular-messages.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_pt-br.min.js"></script>
 
-        <script type="text/javascript">
-            var myModule = angular.module("contactList", ['ngMessages']);
+        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="config.js"></script>
+        <script type="text/javascript" src="contactTypesAPIService.js"></script>
+        <script type="text/javascript" src="contactsAPIService.js"></script>
+        <script type="text/javascript" src="controllers.js"></script>
 
-            myModule.controller('IndexController', function($scope, $http, $filter) {
-                $scope.appName = "Debtor Contacts List";
-
-                var uppercaseFilter = $filter("uppercase");
-
-                $scope.contactTypes = [];
-                $scope.contacts = [];
-
-                $scope.contactTypes.forEach(function(type) { type.category = uppercaseFilter(type.category); });
-
-                var loadContactTypes = function() {
-                    $http.get("http://localhost:3412/types").success(function(data, status) {
-                            data.forEach(function(type) {
-                                type.category = uppercaseFilter(type.category);
-                            });
-                            $scope.contactTypes = data;
-                        }).error(function(data, status) {
-                            $scope.message = "Occurred an error during the load the types."
-                        });
-                };
-                var loadContacts = function() {
-                    $http.get("http://localhost:3412/contacts").success(function(data, status) {
-                            $scope.contacts = data;
-                        }).error(function(data, status) {
-                            $scope.message = "Occurred an error during the load the contacts."
-                        });
-                };
-
-                $scope.addContact = function(contact) {
-                    //$scope.contacts.push(angular.copy(contact));
-                    $http.post("http://localhost:3412/contacts", contact).success(function(data) {
-                            $scope.message = "Debtor registered."
-                            delete $scope.contact;
-                            $scope.contactForm.$setPristine();
-                            loadContacts();
-                        }).error(function(data, status) {
-                            $scope.message = "Occurred an error."
-                        });
-                };
-                $scope.remContacts = function(contacts) {
-                    $scope.contacts = contacts.filter(function(contact){
-                        if(!contact.selected) return contact;
-                    });
-                };
-                $scope.isSelected = function(contacts) {
-                    return contacts.some(function(contact) {
-                        return contact.selected;
-                    });
-                };
-
-                loadContactTypes();
-                loadContacts();
-            });
-        </script>
     </head>
     <body ng-controller="IndexController">
         <div class="jumbotron">
