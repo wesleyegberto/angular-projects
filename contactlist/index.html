@@ -25,6 +25,7 @@
 
         <script type="text/javascript" src="app.js"></script>
         <script type="text/javascript" src="config.js"></script>
+        <script type="text/javascript" src="filters.js"></script>
         <script type="text/javascript" src="contactTypesAPIService.js"></script>
         <script type="text/javascript" src="contactsAPIService.js"></script>
         <script type="text/javascript" src="controllers.js"></script>
@@ -52,7 +53,7 @@
                 </tr>
                 <tr ng-repeat="contact in contacts" ng-class="{selected: contact.selected}">
                     <td style="text-align:center;"><input type="checkbox" ng-model="contact.selected" /></td>
-                    <td>{{contact.name}}</td>
+                    <td>{{contact.name | name | ellipis}}</td>
                     <td>{{contact.type.description}}</td>
                     <td>{{contact.value}}</td>
                     <td>{{contact.amount | currency}}</td>
