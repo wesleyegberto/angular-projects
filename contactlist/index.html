@@ -26,6 +26,7 @@
         <script type="text/javascript" src="app.js"></script>
         <script type="text/javascript" src="config.js"></script>
         <script type="text/javascript" src="filters.js"></script>
+        <script type="text/javascript" src="directives.js"></script>
         <script type="text/javascript" src="contactTypesAPIService.js"></script>
         <script type="text/javascript" src="contactsAPIService.js"></script>
         <script type="text/javascript" src="controllers.js"></script>
@@ -35,10 +36,7 @@
         <div class="jumbotron">
             <h3>{{appName}}</h3>
 
-            <div class="alert alert-info alert-dismissible" role="alert" ng-show="message">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{message}}
-            </div>
+            <bs-alert ng-show="message" type="danger" title="Error during the request!" closable="false">{{message}}</bs-alert>
 
             <table class="table table-striped">
                 <tr>
