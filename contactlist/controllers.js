@@ -21,26 +21,28 @@ angular.module("contactList").controller('IndexController', function($scope,
             });
             $scope.contactTypes = data;
         }).error(function(data, status) {
-            $scope.message =
-                "Occurred an error during the load the types."
+            $scope.type = "danger";
+            $scope.message = "Occurred an error during the load the types."
         });
     };
     var loadContacts = function() {
         contactsAPI.getContacts().success(function(data, status) {
             $scope.contacts = data;
         }).error(function(data, status) {
-            $scope.message =
-                "Occurred an error during the load the contacts."
+            $scope.type = "danger";
+            $scope.message = "Occurred an error during the load the contacts."
         });
     };
 
     $scope.addContact = function(contact) {
         contactsAPI.saveContact(contact).success(function() {
+            $scope.type = "success";
             $scope.message = "Debtor registered."
             delete $scope.contact;
             $scope.contactForm.$setPristine();
             loadContacts();
         }).error(function(data, status) {
+            $scope.type = "danger";
             $scope.message = "Occurred an error."
         });
     };
