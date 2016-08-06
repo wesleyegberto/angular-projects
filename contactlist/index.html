@@ -65,6 +65,7 @@
                     <option value="">Select a type</option>
                 </select>
                 <input type="text" class="form-control" name="amount" ng-model="contact.amount" placeholder="Amount owed" ng-required="true" ng-pattern="/^\d+[,]?\d{0,2}$/" />
+                <input type="text" class="form-control" name="billDate" ng-model="contact.billDate" placeholder="dd/MM/yyyy" ng-required="true" ui-date />
 
                 <button class="btn btn-primary btn-block" ng-click="addContact(contact)" ng-disabled="contactForm.$invalid">Add Contact</button>
                 <button class="btn btn-danger btn-block" ng-click="remContacts(contacts)" ng-show="isSelected(contacts)">Remove Contacts</button>
