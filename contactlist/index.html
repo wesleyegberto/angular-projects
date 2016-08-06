@@ -15,6 +15,28 @@
             .selected { background-color: #ffff99 !important; }
             .alert { margin-top: 10px; text-align: left; }
             .footer { text-align: center;}
+
+            .ui-accordion-title {
+                border: 1px solid #CCCCCC;
+                cursor: pointer;
+                background: -moz-linear-gradient(top, #CCCCCC, #EEEEEE);
+                padding: 10px;
+                font-size: 16px;
+                font-weight: bold;
+                border-radius: 5px 5px 0px 0px;
+                margin-top: 10px;
+                text-align: left;
+            }
+            .ui-accordion-content {
+                border: 1px dashed #CCCCCC;
+                border-top: 0px;
+                border-radius: 0px 0px 5px 5px;
+                background-color: #FFFFFF;
+                padding: 10px;
+                margin-bottom: 10px;
+                font-size: 14px;
+                text-align: left;
+            }
         </style>
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -90,7 +112,19 @@
                     <span ng-message="pattern">Invalid amount.</span>
                 </div>
             </div>
+            
+            <br/>
+
+            <ui-accordions>
+                <ui-accordion title="First One">Hello My Friend!</ui-accordion>
+
+                <ui-accordion title="Second One">How are yah!</ui-accordion>
+
+                <ui-accordion title="Third One">Bye!</ui-accordion>
+            </ui-accordions>
+
         </div>
+
         <div class="footer">
             Created by Wesley Egberto
         </div>
