@@ -7,6 +7,8 @@
         <title>Contact List</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
+        <link rel="stylesheet" type="text/css" href="lib/ui-accordion.css">
+
         <style>
             .jumbotron { width: 500px; margin: 20px auto; padding: 23px 10px 10px 10px  ; text-align: center;}
             .table { margin-top: 20px; }
@@ -15,28 +17,6 @@
             .selected { background-color: #ffff99 !important; }
             .alert { margin-top: 10px; text-align: left; }
             .footer { text-align: center;}
-
-            .ui-accordion-title {
-                border: 1px solid #CCCCCC;
-                cursor: pointer;
-                background: -moz-linear-gradient(top, #CCCCCC, #EEEEEE);
-                padding: 10px;
-                font-size: 16px;
-                font-weight: bold;
-                border-radius: 5px 5px 0px 0px;
-                margin-top: 10px;
-                text-align: left;
-            }
-            .ui-accordion-content {
-                border: 1px dashed #CCCCCC;
-                border-top: 0px;
-                border-radius: 0px 0px 5px 5px;
-                background-color: #FFFFFF;
-                padding: 10px;
-                margin-bottom: 10px;
-                font-size: 14px;
-                text-align: left;
-            }
         </style>
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -45,13 +25,14 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.5.8/angular-messages.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_pt-br.min.js"></script>
 
-        <script type="text/javascript" src="app.js"></script>
-        <script type="text/javascript" src="config.js"></script>
-        <script type="text/javascript" src="filters.js"></script>
-        <script type="text/javascript" src="directives.js"></script>
-        <script type="text/javascript" src="contactTypesAPIService.js"></script>
-        <script type="text/javascript" src="contactsAPIService.js"></script>
-        <script type="text/javascript" src="controllers.js"></script>
+        <script type="text/javascript" src="lib/ui-accordion.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/config.js"></script>
+        <script type="text/javascript" src="js/filters/filters.js"></script>
+        <script type="text/javascript" src="js/directives/directives.js"></script>
+        <script type="text/javascript" src="js/services/contactTypesAPIService.js"></script>
+        <script type="text/javascript" src="js/services/contactsAPIService.js"></script>
+        <script type="text/javascript" src="js/controllers/controllers.js"></script>
 
     </head>
     <body ng-controller="IndexController">
