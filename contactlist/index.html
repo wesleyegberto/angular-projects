@@ -22,6 +22,7 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.5.8/angular-messages.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_pt-br.min.js"></script>
 
@@ -35,65 +36,9 @@
         <script type="text/javascript" src="js/controllers/controllers.js"></script>
 
     </head>
-    <body ng-controller="IndexController">
+    <body>
         <div class="jumbotron">
-            <h3>{{appName}}</h3>
-
-            <bs-alert ng-show="message" type="{{type}}" title="Error during the request!" closable="false">{{message}}</bs-alert>
-
-            <table class="table table-striped">
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Value</th>
-                    <th>Amount owed</th>
-                </tr>
-                <tr ng-if="contacts.length == 0">
-                    <td colspan="3">The list is empty (you are alone :'[)</td>
-                </tr>
-                <tr ng-repeat="contact in contacts" ng-class="{selected: contact.selected}">
-                    <td style="text-align:center;"><input type="checkbox" ng-model="contact.selected" /></td>
-                    <td>{{contact.name | name | ellipis}}</td>
-                    <td>{{contact.type.description}}</td>
-                    <td>{{contact.value}}</td>
-                    <td>{{contact.amount | currency}}</td>
-                </tr>
-            </table>
-
-            <form name="contactForm" novalidate>
-                <input type="text" class="form-control" name="name" ng-model="contact.name" placeholder="Name" ng-required="true" ng-minlength="5" />
-                <input type="text" class="form-control" name="value" ng-model="contact.value" placeholder="Value" ng-required="true" />
-                <select class="form-control" name="type" ng-model="contact.type" ng-required="true" ng-options="type.description group by type.category for type in contactTypes">
-                    <option value="">Select a type</option>
-                </select>
-                <input type="text" class="form-control" name="amount" ng-model="contact.amount" placeholder="Amount owed" ng-required="true" ng-pattern="/^\d+[,]?\d{0,2}$/" />
-                <input type="text" class="form-control" name="billDate" ng-model="contact.billDate" placeholder="dd/MM/yyyy" ng-required="true" ui-date />
-
-                <button class="btn btn-primary btn-block" ng-click="addContact(contact)" ng-disabled="contactForm.$invalid">Add Contact</button>
-                <button class="btn btn-danger btn-block" ng-click="remContacts(contacts)" ng-show="isSelected(contacts)">Remove Contacts</button>
-            </form>
-
-            <div class="alert alert-danger" ng-show="contactForm.$invalid">
-                <div ng-messages="contactForm.name.$error">
-                    <span ng-message="required">Name is required.</span>
-                    <span ng-message="minlength">Name is too short.</span>
-                </div>
-
-                <div ng-messages="contactForm.value.$error">
-                    <span ng-message="required">The contact value is required.</span>
-                </div>
-
-                <div ng-messages="contactForm.type.$error">
-                    <span ng-message="required">The type is required.</span>
-                </div>
-
-                <div ng-messages="contactForm.amount.$error">
-                    <span ng-message="required">Amount is required.</span>
-                    <span ng-message="pattern">Invalid amount.</span>
-                </div>
-            </div>
-            
+            <ng-view></ng-view>
             <br/>
 
             <ui-accordions>
@@ -106,8 +51,6 @@
 
         </div>
 
-        <div class="footer">
-            Created by Wesley Egberto
-        </div>
+        <ng-include src="footer.html" />
     </body>
 </html>

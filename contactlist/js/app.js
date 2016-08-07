@@ -1,1 +1,1 @@
-angular.module("contactList", ['ngMessages', 'uiAccordion']);
+angular.module("contactList", ['ngRoute', 'ngMessages', 'uiAccordion']);

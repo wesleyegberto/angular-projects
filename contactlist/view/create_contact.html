@@ -1,0 +1,35 @@
+<h3>Create New Contact</h3>
+<bs-alert ng-show="message" type="{{type}}" title="Error during the request!" closable="false">{{message}}</bs-alert>
+
+<form name="contactForm" novalidate>
+    <input type="text" class="form-control" name="name" ng-model="contact.name" placeholder="Name" ng-required="true" ng-minlength="5" />
+    <input type="text" class="form-control" name="value" ng-model="contact.value" placeholder="Value" ng-required="true" />
+    <select class="form-control" name="type" ng-model="contact.type" ng-required="true" ng-options="type.description group by type.category for type in contactTypes">
+        <option value="">Select a type</option>
+    </select>
+    <input type="text" class="form-control" name="amount" ng-model="contact.amount" placeholder="Amount owed" ng-required="true" ng-pattern="/^\d+[,]?\d{0,2}$/" />
+    <input type="text" class="form-control" name="billDate" ng-model="contact.billDate" placeholder="dd/MM/yyyy" ng-required="true" ui-date />
+
+    <button class="btn btn-primary btn-block" ng-click="addContact(contact)" ng-disabled="contactForm.$invalid">Add Contact</button>
+    <a class="btn btn-default btn-block" href="#/contacts">Back</a>
+</form>
+
+<div class="alert alert-danger" ng-show="contactForm.$invalid">
+    <div ng-messages="contactForm.name.$error">
+        <span ng-message="required">Name is required.</span>
+        <span ng-message="minlength">Name is too short.</span>
+    </div>
+
+    <div ng-messages="contactForm.value.$error">
+        <span ng-message="required">The contact value is required.</span>
+    </div>
+
+    <div ng-messages="contactForm.type.$error">
+        <span ng-message="required">The type is required.</span>
+    </div>
+
+    <div ng-messages="contactForm.amount.$error">
+        <span ng-message="required">Amount is required.</span>
+        <span ng-message="pattern">Invalid amount.</span>
+    </div>
+</div>
