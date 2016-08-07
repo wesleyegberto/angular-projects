@@ -29,6 +29,7 @@
         <script type="text/javascript" src="lib/ui-accordion.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/config.js"></script>
+        <script type="text/javascript" src="js/interceptors/interceptors.js"></script>
         <script type="text/javascript" src="js/filters/filters.js"></script>
         <script type="text/javascript" src="js/directives/directives.js"></script>
         <script type="text/javascript" src="js/services/contactTypesAPIService.js"></script>
@@ -38,7 +39,9 @@
     </head>
     <body>
         <div class="jumbotron">
-            <ng-view></ng-view>
+            <img ng-show="loading" src="img/loading.gif" width="200" />
+
+            <div ng-hide="loading" ng-view></div>
             <br/>
 
             <ui-accordions>

@@ -31,11 +31,11 @@ angular.module("contactList").controller('newContactCtrl', function($scope, $loc
     $scope.contactTypes.forEach(function(type) {
         type.category = uppercaseFilter(type.category);
     });
-    
+
     $scope.addContact = function(contact) {
         contactsAPI.saveContact(contact).success(function() {
-            $scope.type = "success";
-            $scope.message = "Debtor registered."
+            //$scope.type = "success";
+            //$scope.message = "Debtor registered."
             delete $scope.contact;
             $scope.contactForm.$setPristine();
             $location.path("/contacts");
