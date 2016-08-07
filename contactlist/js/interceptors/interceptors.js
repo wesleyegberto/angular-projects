@@ -42,9 +42,9 @@ angular.module("contactList").factory("loadingInterceptor",function($q, $rootSco
 			return $q.reject(rejection);
 		},
 		response: function(config) {
-			$timeout(function() {
-				$rootScope.loading = false; 
-			}, 500); // create a delay
+			//$timeout(function() {
+			$rootScope.loading = false; 
+			//}, 500); // create a delay
 			return config;
 		},
 		responseError: function(rejection) {

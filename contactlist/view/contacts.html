@@ -1,7 +1,9 @@
 <h3>Debtor Contacts List</h3>
-<bs-alert ng-show="message" type="{{type}}" title="Error during the request!" closable="false">{{message}}</bs-alert>
+
+<bs-alert ng-if="message" type="{{::type}}" title="Error during the request!" closable="false">{{::message}}</bs-alert>
 
 <form name="contactForm" novalidate>
+    <input type="text" class="form-control" placeholder="Type to filter" ng-model="filterBy" ng-model-options="{updateOn: 'default blur', debounce: { default: 500 }}" />
     <table class="table table-striped">
         <tr>
             <th></th>
@@ -13,15 +15,17 @@
         <tr ng-if="contacts.length == 0">
             <td colspan="3">The list is empty (you are alone :'[)</td>
         </tr>
-        <tr ng-repeat="contact in contacts" ng-class="{selected: contact.selected}">
-            <td style="text-align:center;"><input type="checkbox" ng-model="contact.selected" /></td>
-            <td title="{{contact.name | name}}">{{contact.name | name | ellipis:14}}</td>
-            <td>{{contact.type.description}}</td>
-            <td>{{contact.value}}</td>
-            <td>{{contact.amount | currency}}</td>
+        <tr ng-repeat="contact in contacts | filter:filterBy" ng-class="{selected: contact.selected}">
+            <td style="text-align:center;">
+                <input type="checkbox" ng-model="contact.selected" ng-click="verifySelectedContact(contacts)" />
+            </td>
+            <td title="{{contact.name | name}}">{{::contact.name | name | ellipis:14}}</td>
+            <td>{{::contact.type.description}}</td>
+            <td>{{::contact.value}}</td>
+            <td>{{::contact.amount | currency}}</td>
         </tr>
     </table>
 
-    <button class="btn btn-danger btn-block" ng-click="remContacts(contacts)" ng-show="isSelected(contacts)">Remove Contacts</button>
+    <button class="btn btn-danger btn-block" ng-show="hasSelectedContact" ng-click="remContacts(contacts)">Remove Contacts</button>
     <a class="btn btn-default btn-block" href="#/create">Create contact</a>
 </form>

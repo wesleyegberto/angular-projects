@@ -14,9 +14,12 @@ angular.module("contactList").controller('contactsCtrl', function($scope, contac
         $scope.contacts = contacts.filter(function(contact) {
             if (!contact.selected) return contact;
         });
+        $scope.type = "success";
+        $scope.message = "Contact removed."
+        $scope.verifySelectedContact($scope.contacts);
     };
-    $scope.isSelected = function(contacts) {
-        return contacts.some(function(contact) {
+    $scope.verifySelectedContact = function(contacts) {
+        $scope.hasSelectedContact = contacts.some(function(contact) {
             return contact.selected;
         });
     };
