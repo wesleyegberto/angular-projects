@@ -1,6 +1,7 @@
-<h2>Reactive-Driven Validation</h2>
+<h2>Reactive-Driven Form</h2>
 
-<form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="heroForm" (ngSubmit)="onSubmit()" novalidate>
+  {{diagnostic}}
   <div class="form-group">
     <label for="name">Name</label>
     <input type="text" id="name" class="form-control" formControlName="name" required>

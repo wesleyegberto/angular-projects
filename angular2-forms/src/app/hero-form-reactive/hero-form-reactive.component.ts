@@ -39,8 +39,8 @@ export class HeroFormReactiveComponent implements OnInit {
   }
 
   buildForm(): void {
-    // creates the validators and set the model
-    // to the form (no two-way data binding)
+    // creates the validators and copy the data model
+    // into the form model (no two-way data binding)
     this.heroForm = this.fb.group({
       'name': [this.hero.name, [
           Validators.required,
@@ -79,8 +79,12 @@ export class HeroFormReactiveComponent implements OnInit {
   }
 
   onSubmit() {
-    // gets the model (no two-way data binding)
+    // copy the form model into the data model (no two-way data binding)
     this.hero = this.heroForm.value;
     this.submitted = true;
+  }
+
+  get diagnostic() {
+    return JSON.stringify(this.hero);
   }
 }
