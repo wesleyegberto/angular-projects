@@ -51,7 +51,7 @@ export class HeroFormReactiveComponent implements OnInit {
       'alterEgo': [this.hero.alterEgo],
       'power':    [this.hero.power, Validators.required]
     });
-    // react to the user changes so it can validate
+    // when changed we validate to update the messages
     this.heroForm.valueChanges.subscribe(data => this.onValueChanged(data));
     this.onValueChanged(); // (re)set validation messages now
   }

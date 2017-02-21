@@ -50,8 +50,8 @@ export class HeroFormCodedMessageComponent implements AfterViewChecked {
     if (this.currentForm === this.heroForm) { return; }
     this.heroForm = this.currentForm;
     if (this.heroForm) {
-      this.heroForm.valueChanges
-        .subscribe(data => this.onValueChanged(data));
+      // when changed we validate to update the messages
+      this.heroForm.valueChanges.subscribe(data => this.onValueChanged(data));
     }
   }
 
