@@ -1,2 +1,3 @@
-# angularjs-projects
-Repository for AngujarJS projects
+# Angular Projects
+
+Repository for Angujar projects
