@@ -1,0 +1,12 @@
+label { display: block; }
+
+input, textarea { min-width: 250px; }
+
+.feedback-message {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.feedback-message.success { color: green; }
+
+.feedback-message.error { color: red; }

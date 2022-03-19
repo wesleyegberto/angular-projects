@@ -1,0 +1,33 @@
+<form #contactForm="ngForm" (ngSubmit)="sendContact()">
+  <fieldset>
+    <div class="field">
+      <label>Full name</label>
+      <input type="text" name="name" [(ngModel)]="contact.name" required pattern="\w+ \w+">
+    </div>
+
+    <div class="field">
+      <label>E-mail</label>
+      <input type="email" name="email" [(ngModel)]="contact.email"
+        required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+      />
+    </div>
+
+    <div class="field">
+      <label>Subject</label>
+      <input type="text" name="subject" [(ngModel)]="contact.subject" required>
+    </div>
+
+    <div class="field">
+      <label>Message</label>
+      <textarea name="message" [(ngModel)]="contact.message" required></textarea>
+    </div>
+
+    <div>
+      <button type="submit" [disabled]="!contactForm.form.valid">Send</button>
+    </div>
+
+    <div *ngIf="hasMessageToDisplay">
+      <p class="feedback-message" [class.success]="!errorOccurred" [class.error]="errorOccurred">{{ message }}</p>
+    </div>
+  </fieldset>
+</form>
