@@ -1,0 +1,30 @@
+<p>
+  Testing Angular's dependency injection system
+</p>
+
+Angular provides a root injector loaded with the application bootstrap.
+Then it creates a new inject for each lazy loaded module (child of the root injector).
+
+<h1>Global Scope</h1>
+
+<h2>Root Module</h2>
+
+<h3>Singleton Service</h3>
+<p>
+  Angular will instantiate it and keep only one of it in the application.
+</p>
+{{ rootService }}
+
+<h2>Limited Scope</h2>
+
+<h3>Service with Limited Scope</h3>
+{{ simpleService.value }}
+
+<h2>External Module</h2>
+
+<h3>Service limited to the scope of its clients (module, component or directive)</h3>
+{{ moduleProvidedInRootService }}
+
+<h2>Limited Component/Directive Scope</h2>
+
+<app-component-scoped></app-component-scoped>
